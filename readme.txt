@@ -16,6 +16,8 @@ You can also set sitewide defaults. If you don't want page titles on any pages, 
 
 Finally, if you're comfortable with code you can use the `be_title_toggle_post_types` filter to change the post types this applies to (it only applies to pages by default). 
 
+[Support Forum](https://github.com/billerickson/Genesis-Title-Toggle/issues)
+
 
 == Installation ==
 
