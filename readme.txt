@@ -40,6 +40,9 @@ Finally, if you're comfortable with code you can use the `be_title_toggle_post_t
 
 == Changelog ==
 
+= 1.3 =
+* Updated the metabox library to latest version
+
 = 1.2.3 = 
 * The fix in 1.2.2 didn't make it for some reason, so re-patching it.
 
