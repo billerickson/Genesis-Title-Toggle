@@ -217,4 +217,3 @@ class BE_Title_Toggle {
 }
 
 new BE_Title_Toggle;
-?>
