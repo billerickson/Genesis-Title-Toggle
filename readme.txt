@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: genesis, genesiswp, title, 
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.4
+Stable tag: 1.5
 
 Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
 
