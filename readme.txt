@@ -40,6 +40,9 @@ Finally, if you're comfortable with code you can use the `be_title_toggle_post_t
 
 == Changelog ==
 
+= 1.5 = 
+* Add HTML5 Support for Genesis 2.0
+
 = 1.4 = 
 * Updated to work with all StudioPress themes with post formats
 

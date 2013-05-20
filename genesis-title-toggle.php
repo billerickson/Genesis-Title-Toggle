@@ -198,16 +198,20 @@ class BE_Title_Toggle {
 			$override = get_post_meta( $post->ID, 'be_title_toggle_show', true );
 			
 			// If override is empty, get rid of that title
-			if (empty( $override ) )
+			if (empty( $override ) ) {
 				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+				remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+			}
 				
 		// If titles are turned on by default, let's see if this specific one is turned off
 		} else {
 			$override = get_post_meta( $post->ID, 'be_title_toggle_hide', true );
 			
 			// If override has a value, the title's gotta go
-			if ( !empty( $override ) )
+			if ( !empty( $override ) ) {
 				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+				remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+			}
 		}
 	}
 }
