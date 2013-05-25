@@ -1,0 +1,68 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Genesis Title Toggle\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tags/genesis-title-toggle\n"
+"POT-Creation-Date: 2011-09-01 13:09+0100\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: WP-Opas <timo@wpopas.fi>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: ../\n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: Poedit 1.5.5\n"
+"Language: Finnish\n"
+"X-Poedit-SearchPath-0: .\n"
+
+# @ genesis-title-toggle
+#: genesis-title-toggle.php:86 genesis-title-toggle.php:131
+#: genesis-title-toggle.php:150
+msgid "Title Toggle"
+msgstr "Otsakkeen näkyvyys"
+
+# @ genesis-title-toggle
+#: genesis-title-toggle.php:138
+msgid "Show Title"
+msgstr "Näytä otsake"
+
+# @ genesis-title-toggle
+#: genesis-title-toggle.php:157
+msgid "Hide Title"
+msgstr "Piilota otsake"
+
+# @ genesis-title-toggle
+#: genesis-title-toggle.php:45
+#, php-format
+msgid ""
+"Sorry, you can&rsquo;t activate unless you have installed <a href=\"%s"
+"\">Genesis</a>"
+msgstr "Lisäosa vaatii toimiakseen <a href=\"%s\">Genesiksen</a>"
+
+# @ genesis-title-toggle
+#: genesis-title-toggle.php:97
+#, php-format
+msgid "By default, remove titles in the <strong>%s</strong> post type."
+msgstr "Piilota otsakkeet oletuksena <strong>%s</strong> artikkelityypissä"
+
+# @ genesis-title-toggle
+#: genesis-title-toggle.php:139
+msgid ""
+"By default, this post type is set to remove titles. This checkbox lets you "
+"show this specific page&rsquo;s title"
+msgstr ""
+"Otsakkeet piilotetaan oletuksena. Otsake näytetään sivulla, jos valitset "
+"tämän vaihtoehdon."
+
+# @ genesis-title-toggle
+#: genesis-title-toggle.php:158
+msgid ""
+"By default, this post type is set to display titles. This checkbox lets you "
+"hide this specific page&rsquo;s title"
+msgstr ""
+"Otsakkeet näytetään oletuksena. Otsake piilotetaan sivulla, jos valitset "
+"tämän vaihtoehdon."
