@@ -201,6 +201,8 @@ class BE_Title_Toggle {
 			if (empty( $override ) ) {
 				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
 				remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
+				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
 			}
 				
 		// If titles are turned on by default, let's see if this specific one is turned off
@@ -211,6 +213,8 @@ class BE_Title_Toggle {
 			if ( !empty( $override ) ) {
 				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
 				remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
+				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
 			}
 		}
 	}
