@@ -64,16 +64,15 @@ class BE_Title_Toggle {
 		load_plugin_textdomain( 'genesis-title-toggle', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		// Metabox on Theme Settings, for Sitewide Default
-		add_filter( 'genesis_theme_settings_defaults',  array( $this, 'setting_defaults' ) );
-		add_action( 'genesis_settings_sanitizer_init',  array( $this, 'sanitization'     ) );
-		add_action( 'genesis_theme_settings_metaboxes', array( $this, 'register_metabox' ) );
+		add_filter( 'genesis_theme_settings_defaults',  array( $this, 'settings_defaults'         ) );
+		add_action( 'genesis_settings_sanitizer_init',  array( $this, 'settings_sanitization'     ) );
+		add_action( 'genesis_theme_settings_metaboxes', array( $this, 'settings_register_metabox' ) );
 		
-		// Removes Page Title
-		add_action( 'genesis_before', array( $this, 'title_toggle' ) );
-		
-		// If using post formats, have to hook in later for some themes
+		// Show/hide Page Title - If using post formats, have to hook in later for some themes
 		if ( current_theme_supports( 'post-formats' ) ) {
 			add_action( 'genesis_before_post', array( $this, 'title_toggle' ), 20 );
+		} else {
+			add_action( 'genesis_before', array( $this, 'title_toggle' ) );
 		}
 	}
 	
@@ -98,7 +97,7 @@ class BE_Title_Toggle {
 	 * @param array $defaults
 	 * @return array modified defaults
 	 */
-	function setting_defaults( $defaults ) {
+	function settings_defaults( $defaults ) {
 
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
 		foreach ( $post_types as $post_type ) {
@@ -113,7 +112,7 @@ class BE_Title_Toggle {
 	 * @since 1.0.0
 	 * @link http://www.billerickson.net/genesis-theme-options/
 	 */
-	function sanitization() {
+	function settings_sanitization() {
 
 		$fields = array();
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
@@ -131,9 +130,9 @@ class BE_Title_Toggle {
 	 * @link http://www.billerickson.net/genesis-theme-options/
 	 * @param string, Genesis theme settings page hook
 	 */
-	function register_metabox( $_genesis_theme_settings_pagehook ) {
+	function settings_register_metabox( $_genesis_theme_settings_pagehook ) {
 
-		add_meta_box( 'be-title-toggle', __( 'Title Toggle', 'genesis-title-toggle' ), array( $this, 'create_sitewide_metabox' ), $_genesis_theme_settings_pagehook, 'main', 'high' );
+		add_meta_box( 'be-title-toggle', __( 'Title Toggle', 'genesis-title-toggle' ), array( $this, 'settings_render_metabox' ), $_genesis_theme_settings_pagehook, 'main', 'high' );
 	}
 	
 	/**
@@ -142,7 +141,7 @@ class BE_Title_Toggle {
 	 * @since 1.0.0 
 	 * @link http://www.billerickson.net/genesis-theme-options/
 	 */
-	function create_sitewide_metabox() {
+	function settings_render_metabox() {
 
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
 		foreach ( $post_types as $post_type ) {
