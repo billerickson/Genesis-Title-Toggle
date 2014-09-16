@@ -59,20 +59,22 @@ class BE_Title_Toggle {
 	 * @since 1.0.0
 	 */	
 	function init() {
+
 		// Translations
 		load_plugin_textdomain( 'genesis-title-toggle', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 		// Metabox on Theme Settings, for Sitewide Default
-		add_filter( 'genesis_theme_settings_defaults', array( $this, 'setting_defaults' ) );
-		add_action( 'genesis_settings_sanitizer_init', array( $this, 'sanitization' ) );
+		add_filter( 'genesis_theme_settings_defaults',  array( $this, 'setting_defaults' ) );
+		add_action( 'genesis_settings_sanitizer_init',  array( $this, 'sanitization'     ) );
 		add_action( 'genesis_theme_settings_metaboxes', array( $this, 'register_metabox' ) );
 		
 		// Removes Page Title
 		add_action( 'genesis_before', array( $this, 'title_toggle' ) );
 		
 		// If using post formats, have to hook in later for some themes
-		if( current_theme_supports( 'post-formats' ) )
+		if ( current_theme_supports( 'post-formats' ) ) {
 			add_action( 'genesis_before_post', array( $this, 'title_toggle' ), 20 );
+		}
 	}
 	
 	/**
@@ -81,9 +83,10 @@ class BE_Title_Toggle {
 	 * @since 1.0.0
 	 */
 	function activation_hook() {
+
 		if ( 'genesis' != basename( TEMPLATEPATH ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
-			wp_die( sprintf( __( 'Sorry, you can&rsquo;t activate unless you have installed <a href="%s">Genesis</a>', 'genesis-title-toggle'), 'http://www.billerickson.net/get-genesis' ) );
+			wp_die( sprintf( __( 'Sorry, you can&rsquo;t activate unless you have installed <a href="%s">Genesis</a>', 'genesis-title-toggle' ), 'http://www.billerickson.net/get-genesis' ) );
 		}
 	}
 	
@@ -96,9 +99,11 @@ class BE_Title_Toggle {
 	 * @return array modified defaults
 	 */
 	function setting_defaults( $defaults ) {
+
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
-		foreach ( $post_types as $post_type )
+		foreach ( $post_types as $post_type ) {
 			$defaults[] = array( 'be_title_toggle_' . $post_type => '' );
+		}
 		return $defaults;
 	}
 	
@@ -109,10 +114,12 @@ class BE_Title_Toggle {
 	 * @link http://www.billerickson.net/genesis-theme-options/
 	 */
 	function sanitization() {
+
 		$fields = array();
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
-		foreach ( $post_types as $post_type )
+		foreach ( $post_types as $post_type ) {
 			$fields[] = 'be_title_toggle_' . $post_type;
+		}
 			
 	    genesis_add_option_filter( 'one_zero', GENESIS_SETTINGS_FIELD, $fields );	
 	}
@@ -125,7 +132,8 @@ class BE_Title_Toggle {
 	 * @param string, Genesis theme settings page hook
 	 */
 	function register_metabox( $_genesis_theme_settings_pagehook ) {
-		add_meta_box('be-title-toggle', __( 'Title Toggle', 'genesis-title-toggle' ), array( $this, 'create_sitewide_metabox' ), $_genesis_theme_settings_pagehook, 'main', 'high');
+
+		add_meta_box( 'be-title-toggle', __( 'Title Toggle', 'genesis-title-toggle' ), array( $this, 'create_sitewide_metabox' ), $_genesis_theme_settings_pagehook, 'main', 'high' );
 	}
 	
 	/**
@@ -135,11 +143,11 @@ class BE_Title_Toggle {
 	 * @link http://www.billerickson.net/genesis-theme-options/
 	 */
 	function create_sitewide_metabox() {
-		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
-		foreach ( $post_types as $post_type )
-			echo '<p><input type="checkbox" name="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" id="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" value="1" ' . checked( 1, genesis_get_option( 'be_title_toggle_' . $post_type ), false ) .' /> <label for="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']"> ' . sprintf( __( 'By default, remove titles in the <strong>%s</strong> post type.', 'genesis-title-toggle' ), $post_type ) .'</label></p>';
 
-	
+		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
+		foreach ( $post_types as $post_type ) {
+			echo '<p><input type="checkbox" name="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" id="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" value="1" ' . checked( 1, genesis_get_option( 'be_title_toggle_' . $post_type ), false ) .' /> <label for="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']"> ' . sprintf( __( 'By default, remove titles in the <strong>%s</strong> post type.', 'genesis-title-toggle' ), $post_type ) .'</label></p>';
+		}
 	}
 	
 	/**
@@ -148,6 +156,7 @@ class BE_Title_Toggle {
 	 * @since 1.0.0
 	 */
 	function title_toggle() {
+
 		// Make sure we're on the single page
 		if ( !is_singular() )
 			return;
@@ -163,7 +172,7 @@ class BE_Title_Toggle {
 			$override = get_post_meta( $post->ID, 'be_title_toggle_show', true );
 			
 			// If override is empty, get rid of that title
-			if (empty( $override ) ) {
+			if ( empty( $override ) ) {
 				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
 				remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
