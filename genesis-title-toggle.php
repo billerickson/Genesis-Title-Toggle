@@ -67,7 +67,11 @@ class BE_Title_Toggle {
 		add_filter( 'genesis_theme_settings_defaults',  array( $this, 'settings_defaults'         ) );
 		add_action( 'genesis_settings_sanitizer_init',  array( $this, 'settings_sanitization'     ) );
 		add_action( 'genesis_theme_settings_metaboxes', array( $this, 'settings_register_metabox' ) );
-		
+
+		// Pages metaboxes
+		add_action( 'add_meta_boxes', array( $this, 'metabox_register' )         );
+		add_action( 'save_post',      array( $this, 'metabox_save'     ),  1, 2  );
+
 		// Show/hide Page Title - If using post formats, have to hook in later for some themes
 		if ( current_theme_supports( 'post-formats' ) ) {
 			add_action( 'genesis_before_post', array( $this, 'title_toggle' ), 20 );
@@ -146,6 +150,114 @@ class BE_Title_Toggle {
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
 		foreach ( $post_types as $post_type ) {
 			echo '<p><input type="checkbox" name="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" id="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" value="1" ' . checked( 1, genesis_get_option( 'be_title_toggle_' . $post_type ), false ) .' /> <label for="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']"> ' . sprintf( __( 'By default, remove titles in the <strong>%s</strong> post type.', 'genesis-title-toggle' ), $post_type ) .'</label></p>';
+		}
+	}
+
+	/**
+	 * Register the metabox
+	 *
+	 * @since 1.6.0
+	 */
+	function metabox_register() {
+
+		// Make sure we're still in Genesis, plugins like WP Touch need this check
+		if ( !function_exists( 'genesis_get_option' ) ){
+			return $meta_boxes;
+		}
+
+		// Allow devs to control what post types this is allowed on
+		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
+
+		// Add metabox for each post type found
+		foreach ( $post_types as $post_type ) {
+			add_meta_box( 'be-title-toggle', 'Title Toggle', array( $this, 'metabox_render' ), $post_type, 'normal', 'high' );
+		}
+	}
+
+	/**
+	 * Output the metabox
+	 *
+	 * @since 1.6.0
+	 */
+	function metabox_render() {
+
+		// Grab this post type
+		$post_type = get_post_type();
+
+		// Grab default state - True means hidden, empty means displayed
+		$default = genesis_get_option( 'be_title_toggle_' . $post_type );
+
+		// Grab current value
+		$value = get_post_meta( get_the_ID(), 'be_title_toggle_hide', true );
+		$value = ( !empty( $value ) ? true : false );
+		
+		// Security nonce
+		wp_nonce_field( 'be_title_toggle', 'be_title_toggle_nonce' );
+
+		echo '<p style="padding-top:10px;">';
+
+		if ( $default ) {
+
+			// Hide by default
+			printf( '<label for="be_title_toggle_show">%s</label>', __( 'Show Title', 'genesis-title-toggle' ) );
+			
+			echo '<input type="checkbox" id="be_title_toggle_show" name="be_title_toggle_show" ' . checked( true , $value, false ) . ' style="margin:0 20px 0 10px;">';
+			
+			printf( '<span style="color:#999;">%s</span>', __( 'By default, this post type is set to remove titles. This checkbox lets you show this specific page&rsquo;s title.', 'genesis-title-toggle' ) );
+	
+			echo '<input type="hidden" name="be_title_toggle_key" value="show">';
+
+		} else {
+		 	
+		 	// Show by default
+		 	printf( '<label for="be_title_toggle_hide">%s</label>', __( 'Hide Title', 'genesis-title-toggle' ) );
+			
+			echo '<input type="checkbox" id="be_title_toggle_hide" name="be_title_toggle_hide" ' . checked( true , $value, false ) . ' style="margin:0 20px 0 10px;">';
+			
+		 	printf( '<span style="color:#999;">%s</span>', __( 'By default, this post type is set to display titles. This checkbox lets you hide this specific page&rsquo;s title.', 'genesis-title-toggle' ) );
+		
+		 	echo '<input type="hidden" name="be_title_toggle_key" value="hide">';
+		}
+
+		echo '</p>';
+	}
+
+	/**
+	 * Handle metabox saves
+	 *
+	 * @since 1.6.0
+	 */
+	function metabox_save( $post_id, $post ) {
+
+		// Security check
+		if ( ! isset( $_POST['be_title_toggle_nonce'] ) || ! wp_verify_nonce( $_POST['be_title_toggle_nonce'], 'be_title_toggle' ) ) {
+			return;
+		}
+
+		// Bail out if running an autosave, ajax, cron.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return;
+		}
+		if ( defined( 'DOING_CRON' ) && DOING_CRON ) {
+			return;
+		}
+
+		// Bail out if the user doesn't have the correct permissions to update the slider.
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+
+		// Which key do we use
+		$key = 'be_title_toggle_' . $_POST['be_title_toggle_key'];
+
+		// Either save or delete they post meta
+		if ( isset( $_POST[ $key ] ) ) {
+			update_post_meta( $post_id, $key, '1' );
+		} else {
+			delete_post_meta( $post_id, $key );
 		}
 	}
 	
