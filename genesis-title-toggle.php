@@ -67,10 +67,6 @@ class BE_Title_Toggle {
 		add_action( 'genesis_settings_sanitizer_init', array( $this, 'sanitization' ) );
 		add_action( 'genesis_theme_settings_metaboxes', array( $this, 'register_metabox' ) );
 		
-		// Metabox on Edit screen, for Page Override
-		add_filter( 'cmb_meta_boxes', array( $this, 'create_metaboxes' ) );
-		add_action( 'init', array( $this, 'initialize_cmb_meta_boxes' ), 50 );
-		
 		// Removes Page Title
 		add_action( 'genesis_before', array( $this, 'title_toggle' ) );
 		
@@ -144,85 +140,6 @@ class BE_Title_Toggle {
 			echo '<p><input type="checkbox" name="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" id="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" value="1" ' . checked( 1, genesis_get_option( 'be_title_toggle_' . $post_type ), false ) .' /> <label for="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']"> ' . sprintf( __( 'By default, remove titles in the <strong>%s</strong> post type.', 'genesis-title-toggle' ), $post_type ) .'</label></p>';
 
 	
-	}
-	 
-	/**
-	 * Create Page Specific Metaboxes
-	 * @link http://www.billerickson.net/wordpress-metaboxes/
-	 *
-	 * @param array $meta_boxes, current metaboxes
-	 * @return array $meta_boxes, current + new metaboxes
-	 *
-	 */
-	function create_metaboxes( $meta_boxes ) {
-	
-		// Make sure we're still in Genesis, plugins like WP Touch need this check
-		if ( !function_exists( 'genesis_get_option' ) )
-			return $meta_boxes;
-
-		
-		// Get all post types used by plugin and split them up into show and hide.
-		// Sitewide default checked = hide by default, so metabox should let you override that and show the title
-		// Sitewide default empty = display by default, so metabox should let you override that and hide the title
-		
-		$show = array();
-		$hide = array();
-		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
-		foreach ( $post_types as $post_type ) {
-			$default = genesis_get_option( 'be_title_toggle_' . $post_type );
-			if ( !empty( $default ) ) $show[] = $post_type;
-			else $hide[] = $post_type;
-		}
-		
-		
-		// Create the show and hide metaboxes that override the default
-		
-		if ( !empty( $show ) ) {
-			$meta_boxes[] = array(
-				'id' => 'be_title_toggle_show',
-				'title' => __( 'Title Toggle', 'genesis-title-toggle' ),
-				'pages' => $show,
-				'context' => 'normal',
-				'priority' => 'high',
-				'show_names' => true,
-				'fields' => array(
-					array(
-						'name' => __( 'Show Title', 'genesis-title-toggle' ),
-						'desc' => __( 'By default, this post type is set to remove titles. This checkbox lets you show this specific page&rsquo;s title', 'genesis-title-toggle' ),
-						'id' => 'be_title_toggle_show',
-						'type' => 'checkbox'
-					)
-				)
-			);
-		}
-
-		if ( !empty( $hide ) ) {
-			$meta_boxes[] = array(
-				'id' => 'be_title_toggle_hide',
-				'title' => __( 'Title Toggle', 'genesis-title-toggle' ),
-				'pages' => $hide,
-				'context' => 'normal',
-				'priority' => 'high',
-				'show_names' => true,
-				'fields' => array(
-					array(
-						'name' => __( 'Hide Title', 'genesis-title-toggle' ),
-						'desc' => __( 'By default, this post type is set to display titles. This checkbox lets you hide this specific page&rsquo;s title', 'genesis-title-toggle' ),
-						'id' => 'be_title_toggle_hide',
-						'type' => 'checkbox'
-					)
-				)
-			);
-		}
-		
-		return $meta_boxes;
-	}
-
-	function initialize_cmb_meta_boxes() {
-		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
-	    if ( !class_exists('cmb_Meta_Box') && !empty( $post_types ) ) {
-	        require_once( dirname( __FILE__) . '/lib/metabox/init.php' );
-	    }
 	}
 	
 	/**
