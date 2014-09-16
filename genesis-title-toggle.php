@@ -1,26 +1,63 @@
 <?php
-/*
-Plugin Name: Genesis Title Toggle
-Plugin URI: http://www.billerickson.net/
-Description: Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
-Version: 1.5.1
-Author: Bill Erickson
-Author URI: http://www.billerickson.net
-License: GPLv2
-*/
+/**
+ * Plugin Name: Genesis Title Toggle
+ * Plugin URI:  http://www.billerickson.net/
+ * Description: Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
+ * Author:      Bill Erickson
+ * Author URI:  http://www.billerickson.net
+ * Version:     1.6.0
+ * Text Domain: genesis-title-toggle
+ * Domain Path: languages
+ *
+ * Genesis Title Toggle is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * any later version.
+ *
+ * Genesis Title Toggle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Genesis Title Toggle. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @package    BE_Title_Toggle
+ * @author     Bill Erickson
+ * @since      1.0.0
+ * @license    GPL-2.0+
+ */
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+ * Main BE_Title_Toggle class
+ *
+ * @since 1.0.0
+ * @package BE_Title_Toggle
+ */
 class BE_Title_Toggle {
 
-	
+	/**
+	 * Primary constructor.
+	 *
+	 * @since 1.0.0
+	 */
 	function __construct() {
 
+		// Run on plugin activation
 		register_activation_hook( __FILE__, array( $this, 'activation_hook' ) );
+
+		// Bootstrap and go
 		add_action( 'init', array( $this, 'init' ) );	
 	}
-	
+
+	/**
+	 * Initialize the plugin.
+	 *
+	 * @since 1.0.0
+	 */	
 	function init() {
 		// Translations
 		load_plugin_textdomain( 'genesis-title-toggle', false, basename( dirname( __FILE__ ) ) . '/languages' );
@@ -45,6 +82,7 @@ class BE_Title_Toggle {
 	/**
 	 * Activation Hook - Confirm site is using Genesis
 	 *
+	 * @since 1.0.0
 	 */
 	function activation_hook() {
 		if ( 'genesis' != basename( TEMPLATEPATH ) ) {
@@ -55,11 +93,11 @@ class BE_Title_Toggle {
 	
 	/**
 	 * Sitewide Setting - Register Defaults
-	 * @link http://www.billerickson.net/genesis-theme-options/
 	 *
+	 * @since 1.0.0
+	 * @link http://www.billerickson.net/genesis-theme-options/
 	 * @param array $defaults
 	 * @return array modified defaults
-	 *
 	 */
 	function setting_defaults( $defaults ) {
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
@@ -70,8 +108,9 @@ class BE_Title_Toggle {
 	
 	/** 
 	 * Sitewide Setting - Sanitization
-	 * @link http://www.billerickson.net/genesis-theme-options/
 	 *
+	 * @since 1.0.0
+	 * @link http://www.billerickson.net/genesis-theme-options/
 	 */
 	function sanitization() {
 		$fields = array();
@@ -84,19 +123,20 @@ class BE_Title_Toggle {
 	
 	/**
 	 * Sitewide Setting - Register Metabox
-	 * @link http://www.billerickson.net/genesis-theme-options/
 	 *
+	 * @since 1.0.0
+	 * @link http://www.billerickson.net/genesis-theme-options/
 	 * @param string, Genesis theme settings page hook
 	 */
-	
 	function register_metabox( $_genesis_theme_settings_pagehook ) {
 		add_meta_box('be-title-toggle', __( 'Title Toggle', 'genesis-title-toggle' ), array( $this, 'create_sitewide_metabox' ), $_genesis_theme_settings_pagehook, 'main', 'high');
 	}
 	
 	/**
 	 * Sitewide Setting - Create Metabox
-	 * @link http://www.billerickson.net/genesis-theme-options/
 	 *
+	 * @since 1.0.0 
+	 * @link http://www.billerickson.net/genesis-theme-options/
 	 */
 	function create_sitewide_metabox() {
 		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
@@ -185,6 +225,11 @@ class BE_Title_Toggle {
 	    }
 	}
 	
+	/**
+	 * Logic that determines if we should show/hide the title.
+	 *
+	 * @since 1.0.0
+	 */
 	function title_toggle() {
 		// Make sure we're on the single page
 		if ( !is_singular() )
