@@ -9,6 +9,9 @@ Author URI: http://www.billerickson.net
 License: GPLv2
 */
 
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 class BE_Title_Toggle {
 
 	
