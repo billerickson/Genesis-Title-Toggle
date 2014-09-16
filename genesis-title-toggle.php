@@ -10,10 +10,10 @@ License: GPLv2
 */
 
 class BE_Title_Toggle {
-	var $instance;
+
 	
 	function __construct() {
-		$this->instance =& $this;
+
 		register_activation_hook( __FILE__, array( $this, 'activation_hook' ) );
 		add_action( 'init', array( $this, 'init' ) );	
 	}
