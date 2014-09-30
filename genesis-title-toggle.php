@@ -5,7 +5,7 @@
  * Description: Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
  * Author:      Bill Erickson
  * Author URI:  http://www.billerickson.net
- * Version:     1.6.0
+ * Version:     1.6.1
  * Text Domain: genesis-title-toggle
  * Domain Path: languages
  *
@@ -74,7 +74,8 @@ class BE_Title_Toggle {
 
 		// Show/hide Page Title - If using post formats, have to hook in later for some themes
 		if ( current_theme_supports( 'post-formats' ) ) {
-			add_action( 'genesis_before_post', array( $this, 'title_toggle' ), 20 );
+			add_action( 'genesis_before_post',  array( $this, 'title_toggle' ), 20 );
+			add_action( 'genesis_before_entry', array( $this, 'title_toggle' ), 20 );
 		} else {
 			add_action( 'genesis_before', array( $this, 'title_toggle' ) );
 		}
