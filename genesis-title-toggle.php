@@ -5,7 +5,7 @@
  * Description: Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
  * Author:      Bill Erickson
  * Author URI:  http://www.billerickson.net
- * Version:     1.6.1
+ * Version:     1.6.2
  * Text Domain: genesis-title-toggle
  * Domain Path: languages
  *
@@ -189,8 +189,10 @@ class BE_Title_Toggle {
 		$default = genesis_get_option( 'be_title_toggle_' . $post_type );
 
 		// Grab current value
-		$value = get_post_meta( get_the_ID(), 'be_title_toggle_hide', true );
-		$value = ( !empty( $value ) ? true : false );
+		$hide = get_post_meta( get_the_ID(), 'be_title_toggle_hide', true );
+		$hide = !empty( $hide ) ? true : false;
+		$show = get_post_meta( get_the_ID(), 'be_title_toggle_show', true );
+		$show = !empty( $show ) ? true : false;
 		
 		// Security nonce
 		wp_nonce_field( 'be_title_toggle', 'be_title_toggle_nonce' );
@@ -202,7 +204,7 @@ class BE_Title_Toggle {
 			// Hide by default
 			printf( '<label for="be_title_toggle_show">%s</label>', __( 'Show Title', 'genesis-title-toggle' ) );
 			
-			echo '<input type="checkbox" id="be_title_toggle_show" name="be_title_toggle_show" ' . checked( true , $value, false ) . ' style="margin:0 20px 0 10px;">';
+			echo '<input type="checkbox" id="be_title_toggle_show" name="be_title_toggle_show" ' . checked( true , $show, false ) . ' style="margin:0 20px 0 10px;">';
 			
 			printf( '<span style="color:#999;">%s</span>', __( 'By default, this post type is set to remove titles. This checkbox lets you show this specific page&rsquo;s title.', 'genesis-title-toggle' ) );
 	
@@ -213,7 +215,7 @@ class BE_Title_Toggle {
 		 	// Show by default
 		 	printf( '<label for="be_title_toggle_hide">%s</label>', __( 'Hide Title', 'genesis-title-toggle' ) );
 			
-			echo '<input type="checkbox" id="be_title_toggle_hide" name="be_title_toggle_hide" ' . checked( true , $value, false ) . ' style="margin:0 20px 0 10px;">';
+			echo '<input type="checkbox" id="be_title_toggle_hide" name="be_title_toggle_hide" ' . checked( true , $hide, false ) . ' style="margin:0 20px 0 10px;">';
 			
 		 	printf( '<span style="color:#999;">%s</span>', __( 'By default, this post type is set to display titles. This checkbox lets you hide this specific page&rsquo;s title.', 'genesis-title-toggle' ) );
 		
