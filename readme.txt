@@ -3,8 +3,8 @@ Contributors: billerickson
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EDYM76U6BTE5L
 Tags: genesis, genesiswp, title, 
 Requires at least: 3.0
-Tested up to: 4.3
-Stable tag: 1.6.2
+Tested up to: 4.3.1
+Stable tag: 1.7.0
 
 Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
 
@@ -39,6 +39,9 @@ Finally, if you're comfortable with code you can use the `be_title_toggle_post_t
 3. If you check "hide" on Theme Settings, this metabox is displayed on the Edit screen.
 
 == Changelog ==
+
+= 1.7.0 =
+* Added option to make site title an h1 when editing homepage. More information: http://www.billerickson.net/genesis-h1-front-page/
 
 = 1.6.2 = 
 * Fix issue when you have all titles disabled by default

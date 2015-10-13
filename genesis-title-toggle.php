@@ -5,7 +5,7 @@
  * Description: Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
  * Author:      Bill Erickson
  * Author URI:  http://www.billerickson.net
- * Version:     1.6.2
+ * Version:     1.7.0
  * Text Domain: genesis-title-toggle
  * Domain Path: languages
  *
@@ -79,6 +79,9 @@ class BE_Title_Toggle {
 		} else {
 			add_action( 'genesis_before', array( $this, 'title_toggle' ) );
 		}
+		
+		// Site title as h1
+		add_filter( 'genesis_site_title_wrap', array( $this, 'site_title_h1' ) );
 	}
 	
 	/**
@@ -223,6 +226,20 @@ class BE_Title_Toggle {
 		}
 
 		echo '</p>';
+		
+		// Site title as h1
+		if( get_the_ID() == get_option( 'page_on_front' ) ) {
+
+			$h1_site_title = get_post_meta( get_the_ID(), 'be_title_toggle_site_title_h1', true );
+			$h1_site_title = !empty( $h1_site_title ) ? true : false;
+			
+			echo '<p style="padding-top:10px;">';
+		 	printf( '<label for="be_title_toggle_site_title_h1">%s</label>', __( 'h1 Site Title', 'genesis-title-toggle' ) );
+			echo '<input type="checkbox" id="be_title_toggle_site_title_h1" name="be_title_toggle_site_title_h1" ' . checked( true , $h1_site_title, false ) . ' style="margin:0 20px 0 10px;">';
+		 	printf( '<span style="color:#999;">%s</span>', __( 'Make the site title in header an h1. This is HIGHLY recommended if you are removing the page title.', 'genesis-title-toggle' ) );
+			echo '</p>';
+		
+		}
 	}
 
 	/**
@@ -261,6 +278,15 @@ class BE_Title_Toggle {
 			update_post_meta( $post_id, $key, '1' );
 		} else {
 			delete_post_meta( $post_id, $key );
+		}
+		
+		// Site title option for front page
+		if( $post_id == get_option( 'page_on_front' ) ) {
+			if( isset( $_POST['be_title_toggle_site_title_h1'] ) ) {
+				update_post_meta( $post_id, 'be_title_toggle_site_title_h1', '1' );
+			} else {
+				delete_post_meta( $post_id, 'be_title_toggle_site_title_h1' );
+			}
 		}
 	}
 	
@@ -305,6 +331,26 @@ class BE_Title_Toggle {
 				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
 			}
 		}
+	}
+	
+	/**
+	 * Make Site Title an h1 on homepage
+	 *
+	 * @since 1.7.0
+	 * @link http://www.billerickson.net/genesis-h1-front-page/
+	 * @param string $wrap, html element wrapping the site title
+	 * @return string $wrap
+	 */
+	function site_title_h1( $wrap ) {
+
+		if( is_front_page() && ! is_home() ) {
+			$show_as_h1 = get_post_meta( get_the_ID(), 'be_title_toggle_site_title_h1', true );
+			if( $show_as_h1 )
+				$wrap = 'h1';
+		}
+		
+		return $wrap;
+			
 	}
 }
 
