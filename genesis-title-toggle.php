@@ -5,7 +5,7 @@
  * Description: Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
  * Author:      Bill Erickson
  * Author URI:  http://www.billerickson.net
- * Version:     1.7.0
+ * Version:     99
  * Text Domain: genesis-title-toggle
  * Domain Path: languages
  *
