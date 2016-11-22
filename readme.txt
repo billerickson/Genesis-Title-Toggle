@@ -1,10 +1,10 @@
 === Genesis Title Toggle ===
 Contributors: billerickson
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EDYM76U6BTE5L
-Tags: genesis, genesiswp, title, 
+Tags: genesis, genesiswp, title,
 Requires at least: 3.0
-Tested up to: 4.3.1
-Stable tag: 1.7.0
+Tested up to: 4.7.0
+Stable tag: 1.7.1
 
 Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
 
@@ -14,7 +14,7 @@ This plugin lets you easily remove the page title from specific pages. Don't wan
 
 You can also set sitewide defaults. If you don't want page titles on any pages, go to Genesis > Theme Settings > Title Toggle and check the appropriate box. Once a post type has the default set to remove, when editing a page you can selectively turn on that page's title.
 
-Finally, if you're comfortable with code you can use the `be_title_toggle_post_types` filter to change the post types this applies to (it only applies to pages by default). 
+Finally, if you're comfortable with code you can use the `be_title_toggle_post_types` filter to change the post types this applies to (it only applies to pages by default).
 
 [Support Forum](https://github.com/billerickson/Genesis-Title-Toggle/issues)
 
@@ -40,42 +40,45 @@ Finally, if you're comfortable with code you can use the `be_title_toggle_post_t
 
 == Changelog ==
 
+= 1.7.1 =
+* Properly sanitize the metabox key before saving.
+
 = 1.7.0 =
 * Added option to make site title an h1 when editing homepage. More information: http://www.billerickson.net/genesis-h1-front-page/
 
-= 1.6.2 = 
+= 1.6.2 =
 * Fix issue when you have all titles disabled by default
 
-= 1.6.1 = 
+= 1.6.1 =
 * Fix issue with HTML5 themes using post formats
 
 = 1.6 =
 * Updated the metabox code to prevent conflicts with other plugins
 * General refresh of the code to make it cleaner and easier to read
 
-= 1.5 = 
+= 1.5 =
 * Add HTML5 Support for Genesis 2.0
 
-= 1.4 = 
+= 1.4 =
 * Updated to work with all StudioPress themes with post formats
 
 = 1.3 =
 * Updated the metabox library to latest version
 
-= 1.2.3 = 
+= 1.2.3 =
 * The fix in 1.2.2 didn't make it for some reason, so re-patching it.
 
 = 1.2.2 =
 * Minor modification to the way it detects Genesis. Upgrading is only necessary if you're using Premise
 
-= 1.2.1 = 
+= 1.2.1 =
 * Typo in 1.2 caused the plugin to crash. I'm so sorry!
 
 = 1.2 =
 * Fixed an issue where if you weren't running Genesis, site breaks (ex: WP Touch changes themes when on mobile device)
 
-= 1.1 = 
+= 1.1 =
 * Added support for localization and a German language pack. Thanks David Decker.
 
-= 1.0 = 
+= 1.0 =
 * Initial release
