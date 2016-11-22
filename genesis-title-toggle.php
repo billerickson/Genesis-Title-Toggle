@@ -50,14 +50,14 @@ class BE_Title_Toggle {
 		register_activation_hook( __FILE__, array( $this, 'activation_hook' ) );
 
 		// Bootstrap and go
-		add_action( 'init', array( $this, 'init' ) );	
+		add_action( 'init', array( $this, 'init' ) );
 	}
 
 	/**
 	 * Initialize the plugin.
 	 *
 	 * @since 1.0.0
-	 */	
+	 */
 	function init() {
 
 		// Translations
@@ -79,11 +79,11 @@ class BE_Title_Toggle {
 		} else {
 			add_action( 'genesis_before', array( $this, 'title_toggle' ) );
 		}
-		
+
 		// Site title as h1
 		add_filter( 'genesis_site_title_wrap', array( $this, 'site_title_h1' ) );
 	}
-	
+
 	/**
 	 * Activation Hook - Confirm site is using Genesis
 	 *
@@ -96,7 +96,7 @@ class BE_Title_Toggle {
 			wp_die( sprintf( __( 'Sorry, you can&rsquo;t activate unless you have installed <a href="%s">Genesis</a>', 'genesis-title-toggle' ), 'http://www.billerickson.net/get-genesis' ) );
 		}
 	}
-	
+
 	/**
 	 * Sitewide Setting - Register Defaults
 	 *
@@ -113,8 +113,8 @@ class BE_Title_Toggle {
 		}
 		return $defaults;
 	}
-	
-	/** 
+
+	/**
 	 * Sitewide Setting - Sanitization
 	 *
 	 * @since 1.0.0
@@ -127,10 +127,10 @@ class BE_Title_Toggle {
 		foreach ( $post_types as $post_type ) {
 			$fields[] = 'be_title_toggle_' . $post_type;
 		}
-			
-	    genesis_add_option_filter( 'one_zero', GENESIS_SETTINGS_FIELD, $fields );	
+
+	    genesis_add_option_filter( 'one_zero', GENESIS_SETTINGS_FIELD, $fields );
 	}
-	
+
 	/**
 	 * Sitewide Setting - Register Metabox
 	 *
@@ -142,11 +142,11 @@ class BE_Title_Toggle {
 
 		add_meta_box( 'be-title-toggle', __( 'Title Toggle', 'genesis-title-toggle' ), array( $this, 'settings_render_metabox' ), $_genesis_theme_settings_pagehook, 'main', 'high' );
 	}
-	
+
 	/**
 	 * Sitewide Setting - Create Metabox
 	 *
-	 * @since 1.0.0 
+	 * @since 1.0.0
 	 * @link http://www.billerickson.net/genesis-theme-options/
 	 */
 	function settings_render_metabox() {
@@ -196,7 +196,7 @@ class BE_Title_Toggle {
 		$hide = !empty( $hide ) ? true : false;
 		$show = get_post_meta( get_the_ID(), 'be_title_toggle_show', true );
 		$show = !empty( $show ) ? true : false;
-		
+
 		// Security nonce
 		wp_nonce_field( 'be_title_toggle', 'be_title_toggle_nonce' );
 
@@ -206,39 +206,39 @@ class BE_Title_Toggle {
 
 			// Hide by default
 			printf( '<label for="be_title_toggle_show">%s</label>', __( 'Show Title', 'genesis-title-toggle' ) );
-			
+
 			echo '<input type="checkbox" id="be_title_toggle_show" name="be_title_toggle_show" ' . checked( true , $show, false ) . ' style="margin:0 20px 0 10px;">';
-			
+
 			printf( '<span style="color:#999;">%s</span>', __( 'By default, this post type is set to remove titles. This checkbox lets you show this specific page&rsquo;s title.', 'genesis-title-toggle' ) );
-	
+
 			echo '<input type="hidden" name="be_title_toggle_key" value="show">';
 
 		} else {
-		 	
+
 		 	// Show by default
 		 	printf( '<label for="be_title_toggle_hide">%s</label>', __( 'Hide Title', 'genesis-title-toggle' ) );
-			
+
 			echo '<input type="checkbox" id="be_title_toggle_hide" name="be_title_toggle_hide" ' . checked( true , $hide, false ) . ' style="margin:0 20px 0 10px;">';
-			
+
 		 	printf( '<span style="color:#999;">%s</span>', __( 'By default, this post type is set to display titles. This checkbox lets you hide this specific page&rsquo;s title.', 'genesis-title-toggle' ) );
-		
+
 		 	echo '<input type="hidden" name="be_title_toggle_key" value="hide">';
 		}
 
 		echo '</p>';
-		
+
 		// Site title as h1
 		if( get_the_ID() == get_option( 'page_on_front' ) ) {
 
 			$h1_site_title = get_post_meta( get_the_ID(), 'be_title_toggle_site_title_h1', true );
 			$h1_site_title = !empty( $h1_site_title ) ? true : false;
-			
+
 			echo '<p style="padding-top:10px;">';
 		 	printf( '<label for="be_title_toggle_site_title_h1">%s</label>', __( 'h1 Site Title', 'genesis-title-toggle' ) );
 			echo '<input type="checkbox" id="be_title_toggle_site_title_h1" name="be_title_toggle_site_title_h1" ' . checked( true , $h1_site_title, false ) . ' style="margin:0 20px 0 10px;">';
 		 	printf( '<span style="color:#999;">%s</span>', __( 'Make the site title in header an h1. This is HIGHLY recommended if you are removing the page title.', 'genesis-title-toggle' ) );
 			echo '</p>';
-		
+
 		}
 	}
 
@@ -279,7 +279,7 @@ class BE_Title_Toggle {
 		} else {
 			delete_post_meta( $post_id, $key );
 		}
-		
+
 		// Site title option for front page
 		if( $post_id == get_option( 'page_on_front' ) ) {
 			if( isset( $_POST['be_title_toggle_site_title_h1'] ) ) {
@@ -289,7 +289,7 @@ class BE_Title_Toggle {
 			}
 		}
 	}
-	
+
 	/**
 	 * Logic that determines if we should show/hide the title.
 	 *
@@ -300,17 +300,17 @@ class BE_Title_Toggle {
 		// Make sure we're on the single page
 		if ( !is_singular() )
 			return;
-		
-		global $post;	
+
+		global $post;
 		$post_type = get_post_type( $post );
-		
+
 		// See if post type has pages turned off by default
 		$default = genesis_get_option( 'be_title_toggle_' . $post_type );
-		
+
 		// If titles are turned off by default, let's check for an override before removing
 		if ( !empty( $default ) ) {
 			$override = get_post_meta( $post->ID, 'be_title_toggle_show', true );
-			
+
 			// If override is empty, get rid of that title
 			if ( empty( $override ) ) {
 				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
@@ -318,11 +318,11 @@ class BE_Title_Toggle {
 				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
 				remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
 			}
-				
+
 		// If titles are turned on by default, let's see if this specific one is turned off
 		} else {
 			$override = get_post_meta( $post->ID, 'be_title_toggle_hide', true );
-			
+
 			// If override has a value, the title's gotta go
 			if ( !empty( $override ) ) {
 				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
@@ -332,7 +332,7 @@ class BE_Title_Toggle {
 			}
 		}
 	}
-	
+
 	/**
 	 * Make Site Title an h1 on homepage
 	 *
@@ -348,9 +348,9 @@ class BE_Title_Toggle {
 			if( $show_as_h1 )
 				$wrap = 'h1';
 		}
-		
+
 		return $wrap;
-			
+
 	}
 }
 
