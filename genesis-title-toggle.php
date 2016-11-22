@@ -271,7 +271,7 @@ class BE_Title_Toggle {
 		}
 
 		// Which key do we use
-		$key = 'be_title_toggle_' . $_POST['be_title_toggle_key'];
+		$key = 'show' == esc_attr( $_POST['be_title_toggle_key'] ) ? 'be_title_toggle_show' : 'be_title_toggle_hide';
 
 		// Either save or delete they post meta
 		if ( isset( $_POST[ $key ] ) ) {
