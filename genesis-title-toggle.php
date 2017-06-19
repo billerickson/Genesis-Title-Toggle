@@ -2,10 +2,10 @@
 /**
  * Plugin Name: Genesis Title Toggle
  * Plugin URI:  http://www.billerickson.net/
- * Description: Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
+ * Description: [Genesis Theme Only] Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings.
  * Author:      Bill Erickson
  * Author URI:  http://www.billerickson.net
- * Version:     1.7.1
+ * Version:     1.7.2
  * Text Domain: genesis-title-toggle
  * Domain Path: languages
  *

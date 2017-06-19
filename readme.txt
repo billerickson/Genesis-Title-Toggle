@@ -3,12 +3,16 @@ Contributors: billerickson
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EDYM76U6BTE5L
 Tags: genesis, genesiswp, title,
 Requires at least: 3.0
-Tested up to: 4.7.0
-Stable tag: 1.7.1
+Tested up to: 4.8
+Stable tag: 1.7.2
+
+This plugin ONLY works with the Genesis theme. Do not install if you are not using Genesis.
 
 Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings. Must be using the Genesis theme.
 
 == Description ==
+
+This plugin ONLY works with the Genesis theme. Do not install if you are not using Genesis.
 
 This plugin lets you easily remove the page title from specific pages. Don't want "Home" at the top of your homepage? Activate, then edit the homepage and check "Hide".
 
