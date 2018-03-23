@@ -373,6 +373,12 @@ class BE_Title_Toggle {
 				$remove['tag'] = 'genesis_before_content_sidebar_wrap';
 				break;
 
+			case 'Showcase Pro':
+				if( has_post_thumbnail() ) {
+					remove_action( 'genesis_after_header', 'showcase_page_header', 8 );
+				}
+				break;
+
 			default:
 				$remove = false;
 				break;
