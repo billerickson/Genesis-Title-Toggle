@@ -379,6 +379,10 @@ class BE_Title_Toggle {
 				}
 				break;
 
+			case 'Interior Pro Theme':
+				$remove['tag'] = 'genesis_after_header';
+				break;
+
 			default:
 				$remove = false;
 				break;
