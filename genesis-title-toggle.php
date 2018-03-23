@@ -382,6 +382,22 @@ class BE_Title_Toggle {
 				remove_action( 'business_page_header', 'business_page_title', 10 );
 				break;
 
+			case 'Centric Theme':
+				if( is_page() ) {
+
+					add_action(
+						'genesis_before',
+						function() {
+							remove_action( 'genesis_after_header', 'centric_open_post_title', 1 );
+							remove_action( 'genesis_after_header', 'genesis_do_post_title', 2 );
+							remove_action( 'genesis_after_header', 'centric_close_post_title', 3 );
+						},
+						20
+					);
+
+				}
+				break;
+
 			default:
 				$remove = false;
 				break;
