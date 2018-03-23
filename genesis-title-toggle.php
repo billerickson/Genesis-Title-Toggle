@@ -73,12 +73,7 @@ class BE_Title_Toggle {
 		add_action( 'save_post',      array( $this, 'metabox_save'     ),  1, 2  );
 
 		// Show/hide Page Title
-		if ( current_theme_supports( 'post-formats' ) ) {
-			add_action( 'genesis_before_post',  array( $this, 'title_toggle' ), 20 );
-			add_action( 'genesis_before_entry', array( $this, 'title_toggle' ), 20 );
-		} else {
-			add_action( 'genesis_meta', array( $this, 'title_toggle' ), 20 );
-		}
+		add_action( 'genesis_meta', array( $this, 'title_toggle' ), 20 );
 
 		// Site title as h1
 		add_filter( 'genesis_site_title_wrap', array( $this, 'site_title_h1' ) );
@@ -381,6 +376,10 @@ class BE_Title_Toggle {
 
 			case 'Interior Pro Theme':
 				$remove['tag'] = 'genesis_after_header';
+				break;
+
+			case 'Business Pro Theme':
+				remove_action( 'business_page_header', 'business_page_title', 10 );
 				break;
 
 			default:
