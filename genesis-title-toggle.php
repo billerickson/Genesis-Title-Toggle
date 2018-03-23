@@ -309,13 +309,7 @@ class BE_Title_Toggle {
 
 			// If override is empty, get rid of that title
 			if ( empty( $override ) ) {
-				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-				remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
-
-				if( apply_filters( 'be_title_toggle_remove_markup', true ) ) {
-					remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
-					remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
-				}
+				$this->remove_title();
 			}
 
 		// If titles are turned on by default, let's see if this specific one is turned off
@@ -324,15 +318,24 @@ class BE_Title_Toggle {
 
 			// If override has a value, the title's gotta go
 			if ( !empty( $override ) ) {
-				remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-				remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
-
-				if( apply_filters( 'be_title_toggle_remove_markup', true ) ) {
-					remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
-					remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
-				}
+				$this->remove_title();
 			}
 		}
+	}
+
+	/**
+	 * Remove Title
+	 *
+	 */
+	function remove_title() {
+		remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+		remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+
+		if( apply_filters( 'be_title_toggle_remove_markup', true ) ) {
+			remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
+			remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
+		}
+
 	}
 
 	/**
