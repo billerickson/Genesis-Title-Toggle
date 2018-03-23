@@ -364,7 +364,6 @@ class BE_Title_Toggle {
 
 			case 'Centric Theme':
 				if( is_page() ) {
-
 					add_action(
 					'genesis_before',
 						function() {
@@ -374,7 +373,6 @@ class BE_Title_Toggle {
 						},
 						20
 					);
-
 				}
 				break;
 
@@ -383,7 +381,6 @@ class BE_Title_Toggle {
 				break;
 
 			case 'Pretty Pictures Theme':
-
 				add_action(
 					'genesis_before_post',
 					function() {
@@ -401,6 +398,16 @@ class BE_Title_Toggle {
 
 			case 'Studio Pro':
 				remove_action( 'studio_page_header', 'studio_page_title', 10 );
+				break;
+
+			case 'Tapestry Theme':
+				add_action(
+					'genesis_before_post',
+					function() {
+						remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+					},
+					20
+				);
 				break;
 		}
 	}
