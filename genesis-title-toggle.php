@@ -388,7 +388,12 @@ class BE_Title_Toggle {
 
 			case 'Showcase Pro':
 				if( has_post_thumbnail() ) {
-					remove_action( 'genesis_after_header', 'showcase_page_header', 8 );
+					add_action( 'genesis_after_header', function() {
+						add_filter( 'the_title', '__return_false' );
+					}, 7 );
+					add_action( 'genesis_after_header', function() {
+						remove_filter( 'the_title', '__return_false' );
+					}, 9 );
 				}
 				break;
 
