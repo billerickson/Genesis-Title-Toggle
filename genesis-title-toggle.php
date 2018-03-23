@@ -335,7 +335,7 @@ class BE_Title_Toggle {
 	function remove_title() {
 
 		// Theme specific code
-		$this->theme_specific_hook();
+		$this->theme_specific();
 
 		// Remove post title
 		remove_action( 'genesis_post_title', 'genesis_do_post_title' );
@@ -353,7 +353,10 @@ class BE_Title_Toggle {
 	 * Theme Specific Hook
 	 *
 	 */
-	function theme_specific_hook() {
+	function theme_specific() {
+
+		// Custom themes can use this to disable the title if they've moved it
+		do_action( 'genesis_title_toggle_remove' );
 
 		if( ! defined( 'CHILD_THEME_NAME' ) )
 			return false;
