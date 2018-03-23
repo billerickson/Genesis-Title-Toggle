@@ -398,6 +398,10 @@ class BE_Title_Toggle {
 					remove_action( 'genesis_after_header', 'showcase_page_header', 8 );
 				}
 				break;
+
+			case 'Studio Pro':
+				remove_action( 'studio_page_header', 'studio_page_title', 10 );
+				break;
 		}
 	}
 
