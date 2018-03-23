@@ -380,16 +380,6 @@ class BE_Title_Toggle {
 				remove_action( 'genesis_after_header', 'genesis_do_post_title' );
 				break;
 
-			case 'Pretty Pictures Theme':
-				add_action(
-					'genesis_before_post',
-					function() {
-						remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-					},
-					20
-				);
-				break;
-
 			case 'Showcase Pro':
 				if( has_post_thumbnail() ) {
 					remove_action( 'genesis_after_header', 'showcase_page_header', 8 );
@@ -400,11 +390,21 @@ class BE_Title_Toggle {
 				remove_action( 'studio_page_header', 'studio_page_title', 10 );
 				break;
 
+			// Themes with post formats
+			case 'Pretty Pictures Theme':
 			case 'Tapestry Theme':
+			case 'The 411 Pro Theme':
 				add_action(
 					'genesis_before_post',
 					function() {
 						remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+					},
+					20
+				);
+				add_action(
+					'genesis_before_entry',
+					function() {
+						remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 					},
 					20
 				);
