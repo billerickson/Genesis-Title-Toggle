@@ -328,16 +328,12 @@ class BE_Title_Toggle {
 	 */
 	function remove_title() {
 
-		// Theme specific hook
-		$remove = $this->theme_specific_hook();
-		if( !empty( $remove ) ) {
-			remove_action( $remove['tag'], $remove['function'], $remove['priority'] );
+		// Theme specific code
+		$this->theme_specific_hook();
 
-		// Standard Genesis hooks
-		} else {
-			remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-			remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
-		}
+		// Remove post title
+		remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+		remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 
 		// Remove header markup
 		if( apply_filters( 'be_title_toggle_remove_markup', true ) ) {
@@ -356,16 +352,10 @@ class BE_Title_Toggle {
 		if( ! defined( 'CHILD_THEME_NAME' ) )
 			return false;
 
-		$remove = array(
-			'tag' => 'genesis_entry_header',
-			'function' => 'genesis_do_post_title',
-			'priority' => 10,
-		);
-
 		switch( CHILD_THEME_NAME ) {
 
 			case 'Academy Pro':
-				$remove['tag'] = 'genesis_before_content_sidebar_wrap';
+				remove_action( 'genesis_before_content_sidebar_wrap', 'genesis_do_post_title' );
 				break;
 
 			case 'Showcase Pro':
@@ -375,7 +365,7 @@ class BE_Title_Toggle {
 				break;
 
 			case 'Interior Pro Theme':
-				$remove['tag'] = 'genesis_after_header';
+				remove_action( 'genesis_after_header', 'genesis_do_post_title' );
 				break;
 
 			case 'Business Pro Theme':
@@ -397,13 +387,7 @@ class BE_Title_Toggle {
 
 				}
 				break;
-
-			default:
-				$remove = false;
-				break;
 		}
-
-		return $remove;
 	}
 
 	/**
