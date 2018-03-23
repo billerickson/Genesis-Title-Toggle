@@ -376,7 +376,7 @@ class BE_Title_Toggle {
 				if( is_page() ) {
 
 					add_action(
-						'genesis_before',
+					'genesis_before',
 						function() {
 							remove_action( 'genesis_after_header', 'centric_open_post_title', 1 );
 							remove_action( 'genesis_after_header', 'genesis_do_post_title', 2 );
@@ -387,6 +387,16 @@ class BE_Title_Toggle {
 
 				}
 				break;
+
+			case 'Pretty Pictures Theme':
+
+				add_action(
+					'genesis_before_post',
+					function() {
+						remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+					},
+					20
+				);
 		}
 	}
 
