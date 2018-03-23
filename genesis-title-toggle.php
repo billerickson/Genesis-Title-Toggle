@@ -75,6 +75,12 @@ class BE_Title_Toggle {
 		// Show/hide Page Title
 		add_action( 'genesis_meta', array( $this, 'title_toggle' ), 20 );
 
+		// If theme supports post formats, run later
+		if( current_theme_supports( 'post-formats' ) ) {
+			add_action( 'genesis_before_post', array( $this, 'title_toggle' ), 20 );
+			add_action( 'genesis_before_entry', array( $this, 'title_toggle' ), 20 );
+		}
+
 		// Site title as h1
 		add_filter( 'genesis_site_title_wrap', array( $this, 'site_title_h1' ) );
 	}
@@ -388,26 +394,6 @@ class BE_Title_Toggle {
 
 			case 'Studio Pro':
 				remove_action( 'studio_page_header', 'studio_page_title', 10 );
-				break;
-
-			// Themes with post formats
-			case 'Pretty Pictures Theme':
-			case 'Tapestry Theme':
-			case 'The 411 Pro Theme':
-				add_action(
-					'genesis_before_post',
-					function() {
-						remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-					},
-					20
-				);
-				add_action(
-					'genesis_before_entry',
-					function() {
-						remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
-					},
-					20
-				);
 				break;
 		}
 	}
