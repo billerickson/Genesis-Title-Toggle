@@ -358,16 +358,6 @@ class BE_Title_Toggle {
 				remove_action( 'genesis_before_content_sidebar_wrap', 'genesis_do_post_title' );
 				break;
 
-			case 'Showcase Pro':
-				if( has_post_thumbnail() ) {
-					remove_action( 'genesis_after_header', 'showcase_page_header', 8 );
-				}
-				break;
-
-			case 'Interior Pro Theme':
-				remove_action( 'genesis_after_header', 'genesis_do_post_title' );
-				break;
-
 			case 'Business Pro Theme':
 				remove_action( 'business_page_header', 'business_page_title', 10 );
 				break;
@@ -388,6 +378,10 @@ class BE_Title_Toggle {
 				}
 				break;
 
+			case 'Interior Pro Theme':
+				remove_action( 'genesis_after_header', 'genesis_do_post_title' );
+				break;
+
 			case 'Pretty Pictures Theme':
 
 				add_action(
@@ -397,6 +391,13 @@ class BE_Title_Toggle {
 					},
 					20
 				);
+				break;
+
+			case 'Showcase Pro':
+				if( has_post_thumbnail() ) {
+					remove_action( 'genesis_after_header', 'showcase_page_header', 8 );
+				}
+				break;
 		}
 	}
 
