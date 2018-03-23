@@ -73,8 +73,12 @@ class BE_Title_Toggle {
 		add_action( 'save_post',      array( $this, 'metabox_save'     ),  1, 2  );
 
 		// Show/hide Page Title
-		add_action( 'genesis_before_post',  array( $this, 'title_toggle' ), 20 );
-		add_action( 'genesis_before_entry', array( $this, 'title_toggle' ), 20 );
+		if ( current_theme_supports( 'post-formats' ) ) {
+			add_action( 'genesis_before_post',  array( $this, 'title_toggle' ), 20 );
+			add_action( 'genesis_before_entry', array( $this, 'title_toggle' ), 20 );
+		} else {
+			add_action( 'genesis_meta', array( $this, 'title_toggle' ), 20 );
+		}
 
 		// Site title as h1
 		add_filter( 'genesis_site_title_wrap', array( $this, 'site_title_h1' ) );
@@ -328,14 +332,53 @@ class BE_Title_Toggle {
 	 *
 	 */
 	function remove_title() {
-		remove_action( 'genesis_post_title', 'genesis_do_post_title' );
-		remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 
+		// Theme specific hook
+		$remove = $this->theme_specific_hook();
+		if( !empty( $remove ) ) {
+			remove_action( $remove['tag'], $remove['function'], $remove['priority'] );
+
+		// Standard Genesis hooks
+		} else {
+			remove_action( 'genesis_post_title', 'genesis_do_post_title' );
+			remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
+		}
+
+		// Remove header markup
 		if( apply_filters( 'be_title_toggle_remove_markup', true ) ) {
 			remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_open', 5 );
 			remove_action( 'genesis_entry_header', 'genesis_entry_header_markup_close', 15 );
 		}
 
+	}
+
+	/**
+	 * Theme Specific Hook
+	 *
+	 */
+	function theme_specific_hook() {
+
+		if( ! defined( 'CHILD_THEME_NAME' ) )
+			return false;
+
+		$remove = array(
+			'tag' => 'genesis_entry_header',
+			'function' => 'genesis_do_post_title',
+			'priority' => 10,
+		);
+
+		switch( CHILD_THEME_NAME ) {
+
+			case 'Academy Pro':
+				$remove['tag'] = 'genesis_before_content_sidebar_wrap';
+				break;
+
+			default:
+				$remove = false;
+				break;
+		}
+
+		return $remove;
 	}
 
 	/**
