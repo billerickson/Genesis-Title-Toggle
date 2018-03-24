@@ -356,7 +356,7 @@ class BE_Title_Toggle {
 	function theme_specific() {
 
 		// Custom themes can use this to disable the title if they've moved it
-		do_action( 'genesis_title_toggle_remove' );
+		do_action( 'be_title_toggle_remove' );
 
 		if( ! defined( 'CHILD_THEME_NAME' ) )
 			return false;
