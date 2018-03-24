@@ -2,10 +2,10 @@
 /**
  * Plugin Name: Genesis Title Toggle
  * Plugin URI:  http://www.billerickson.net/
- * Description: [Genesis Theme Only] Turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings.
+ * Description: When using the Genesis Theme framework, this plugin allows you to turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings.
  * Author:      Bill Erickson
- * Author URI:  http://www.billerickson.net
- * Version:     1.7.2
+ * Author URI:  https://www.billerickson.net
+ * Version:     1.8.0
  * Text Domain: genesis-title-toggle
  * Domain Path: languages
  *
@@ -331,6 +331,7 @@ class BE_Title_Toggle {
 	/**
 	 * Remove Title
 	 *
+	 * @since 1.8.0
 	 */
 	function remove_title() {
 
@@ -350,12 +351,14 @@ class BE_Title_Toggle {
 	}
 
 	/**
-	 * Theme Specific Hook
+	 * Theme Specific Code
 	 *
+	 * @since 1.8.0
 	 */
 	function theme_specific() {
 
 		// Custom themes can use this to disable the title if they've moved it
+		// @see https://github.com/billerickson/genesis-title-toggle/wiki#integrating-with-a-custom-theme
 		do_action( 'be_title_toggle_remove' );
 
 		if( ! defined( 'CHILD_THEME_NAME' ) )

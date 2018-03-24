@@ -3,8 +3,8 @@ Contributors: billerickson
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EDYM76U6BTE5L
 Tags: genesis, genesiswp, title,
 Requires at least: 3.0
-Tested up to: 4.8
-Stable tag: 1.7.2
+Tested up to: 4.9
+Stable tag: 1.8.0
 
 This plugin ONLY works with the Genesis theme. Do not install if you are not using Genesis.
 
@@ -18,9 +18,9 @@ This plugin lets you easily remove the page title from specific pages. Don't wan
 
 You can also set sitewide defaults. If you don't want page titles on any pages, go to Genesis > Theme Settings > Title Toggle and check the appropriate box. Once a post type has the default set to remove, when editing a page you can selectively turn on that page's title.
 
-Finally, if you're comfortable with code you can use the `be_title_toggle_post_types` filter to change the post types this applies to (it only applies to pages by default).
-
-[Support Forum](https://github.com/billerickson/Genesis-Title-Toggle/issues)
+See [the wiki](https://github.com/billerickson/genesis-title-toggle/wiki) for information on extending the plugin:
+- [Use on Posts or Custom Post Types](https://github.com/billerickson/genesis-title-toggle/wiki#use-on-posts-or-custom-post-types)
+- [Integrate with Custom Theme](https://github.com/billerickson/Genesis-Title-Toggle/wiki#integrating-with-a-custom-theme)
 
 
 == Installation ==
@@ -43,6 +43,10 @@ Finally, if you're comfortable with code you can use the `be_title_toggle_post_t
 3. If you check "hide" on Theme Settings, this metabox is displayed on the Edit screen.
 
 == Changelog ==
+
+= 1.8.0 =
+* Added support for all StudioPress child themes
+* Added `be_title_toggle_remove` action for custom theme integration
 
 = 1.7.1 =
 * Properly sanitize the metabox key before saving.
