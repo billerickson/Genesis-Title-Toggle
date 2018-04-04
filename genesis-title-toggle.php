@@ -370,6 +370,10 @@ class BE_Title_Toggle {
 				remove_action( 'genesis_before_content_sidebar_wrap', 'genesis_do_post_title' );
 				break;
 
+			case 'Business Pro':
+				remove_action( 'genesis_after_header', 'business_page_header_title', 24 );
+				break;
+
 			case 'Business Pro Theme':
 				remove_action( 'business_page_header', 'business_page_title', 10 );
 				break;
