@@ -3,7 +3,7 @@ Contributors: billerickson
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=EDYM76U6BTE5L
 Tags: genesis, genesiswp, title,
 Requires at least: 3.0
-Tested up to: 4.9
+Tested up to: 5.2
 Stable tag: 1.8.0
 
 This plugin ONLY works with the Genesis theme. Do not install if you are not using Genesis.
