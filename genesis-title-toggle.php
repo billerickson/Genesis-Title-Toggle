@@ -5,7 +5,7 @@
  * Description: When using the Genesis Theme framework, this plugin allows you to turn on/off page titles on a per page basis, and set sitewide defaults from Theme Settings.
  * Author:      Bill Erickson
  * Author URI:  https://www.billerickson.net
- * Version:     1.8.0
+ * Version:     1.9.0
  * Text Domain: genesis-title-toggle
  * Domain Path: languages
  *
@@ -63,10 +63,13 @@ class BE_Title_Toggle {
 		// Translations
 		load_plugin_textdomain( 'genesis-title-toggle', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
-		// Metabox on Theme Settings, for Sitewide Default
+		// Genesis 2.x: Metabox on Theme Settings, for Sitewide Default
 		add_filter( 'genesis_theme_settings_defaults',  array( $this, 'settings_defaults'         ) );
 		add_action( 'genesis_settings_sanitizer_init',  array( $this, 'settings_sanitization'     ) );
 		add_action( 'genesis_theme_settings_metaboxes', array( $this, 'settings_register_metabox' ) );
+
+		// Genesis 3.x: Theme settings in customizer
+		add_filter( 'genesis_customizer_theme_settings_config', array( $this, 'customizer_settings' ) );
 
 		// Pages metaboxes
 		add_action( 'add_meta_boxes', array( $this, 'metabox_register' )         );
@@ -156,6 +159,34 @@ class BE_Title_Toggle {
 		foreach ( $post_types as $post_type ) {
 			echo '<p><input type="checkbox" name="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" id="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']" value="1" ' . checked( 1, genesis_get_option( 'be_title_toggle_' . $post_type ), false ) .' /> <label for="' . GENESIS_SETTINGS_FIELD . '[be_title_toggle_' . $post_type . ']"> ' . sprintf( __( 'By default, remove titles in the <strong>%s</strong> post type.', 'genesis-title-toggle' ), $post_type ) .'</label></p>';
 		}
+	}
+
+	/**
+	 * Customizer settings
+	 *
+	 * @since 1.9.0
+	 */
+	public function customizer_settings( array $config ) {
+		$controls = array();
+		$post_types = apply_filters( 'be_title_toggle_post_types', array( 'page' ) );
+		foreach( $post_types as $post_type ) {
+			$controls['be_title_toggle_' . $post_type ] = array(
+				'label'       => ucfirst( $post_type ),
+				'description' => sprintf( __( 'By default, remove titles in the <strong>%s</strong> post type.', 'genesis-title-toggle' ), $post_type ),
+				'section'     => 'title_toggle',
+				'type'        => 'checkbox',
+				'settings'    => array(
+					'default' => 0,
+				),
+
+			);
+		}
+		$config['genesis']['sections']['title_toggle'] = array(
+			'title' => __( 'Title Toggle', 'genesis-title-toggle' ),
+			'panel' => 'genesis',
+			'controls' => $controls,
+		);
+		return $config;
 	}
 
 	/**

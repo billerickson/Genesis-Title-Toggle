@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: genesis, genesiswp, title,
 Requires at least: 3.0
 Tested up to: 5.2
-Stable tag: 1.8.0
+Stable tag: 1.9.0
 
 This plugin ONLY works with the Genesis theme. Do not install if you are not using Genesis.
 
@@ -16,7 +16,7 @@ This plugin ONLY works with the Genesis theme. Do not install if you are not usi
 
 This plugin lets you easily remove the page title from specific pages. Don't want "Home" at the top of your homepage? Activate, then edit the homepage and check "Hide".
 
-You can also set sitewide defaults. If you don't want page titles on any pages, go to Genesis > Theme Settings > Title Toggle and check the appropriate box. Once a post type has the default set to remove, when editing a page you can selectively turn on that page's title.
+You can also set sitewide defaults. If you don't want page titles on any pages, go to Appearance > Customize > Theme Settings > Title Toggle and check the appropriate box. Once a post type has the default set to remove, when editing a page you can selectively turn on that page's title.
 
 See [the wiki](https://github.com/billerickson/genesis-title-toggle/wiki) for information on extending the plugin:
 - [Use on Posts or Custom Post Types](https://github.com/billerickson/genesis-title-toggle/wiki#use-on-posts-or-custom-post-types)
@@ -31,7 +31,7 @@ See [the wiki](https://github.com/billerickson/genesis-title-toggle/wiki) for in
 
 3. When editing a page, go down to the Title Toggle metabox and check "hide" to hide that page's title.
 
-4. (Optional) Go to Genesis > Theme Settings > Title Toggle to remove titles on all pages by default.
+4. (Optional) Go to Appearanc > Customize > Theme Settings > Title Toggle to remove titles on all pages by default.
 
 
 == Screenshots ==
@@ -43,6 +43,9 @@ See [the wiki](https://github.com/billerickson/genesis-title-toggle/wiki) for in
 3. If you check "hide" on Theme Settings, this metabox is displayed on the Edit screen.
 
 == Changelog ==
+
+= 1.9.0 =
+* Genesis 3.0 compatibility. Added the theme settings to customizer.
 
 = 1.8.0 =
 * Added support for all StudioPress child themes
